@@ -1,0 +1,18 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t moniabeji/fibonnaci -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - dockoer run moiabeji/fibonnaci nom test -- --coverage
+
+after_success:
+  - docker build -t moniabeji/fibonnaci-server -f Dockerfile ./server
+  - docker build -t moniabeji/fibonnaci-worker -f Dockerfile.dev ./worker
+  - docker build -t moniabeji/fibonnaci-client -f Dockerfile.dev ./client
+  - docker build -t moniabeji/fibonnaci-nginx -f Dockerfile.dev ./nginx
+  # login to dockerhub
+  
